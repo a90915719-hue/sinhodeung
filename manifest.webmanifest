@@ -1,7 +1,7 @@
 {
-  "name": "신호등",
-  "short_name": "신호등",
-  "description": "AI 신호등 · 확률환수 신호등",
+  "name": "국민 AI 신호등",
+  "short_name": "AI 신호등",
+  "description": "버튼 하나로 AI 도움 받기",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -9,8 +9,21 @@
   "theme_color": "#13233F",
   "lang": "ko",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
