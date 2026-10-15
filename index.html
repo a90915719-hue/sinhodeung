@@ -36,6 +36,11 @@ h1{margin:0;font-size:32px;letter-spacing:-.01em;line-height:1.25}
 #done{display:none;text-align:center;color:var(--muted);font-size:17px}
 .small{font-size:16px;color:var(--muted);text-align:center;margin:0}
 footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
+.finger{position:fixed;z-index:50;font-size:64px;line-height:1;animation:p .8s infinite alternate;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
+@keyframes p{to{transform:translateY(14px)}}
+.bubble{position:fixed;z-index:50;background:#EB4034;color:#fff;font-weight:800;font-size:22px;padding:10px 16px;border-radius:16px;pointer-events:none;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+#fingerBar,#bubbleBar,#fingerTop,#bubbleTop{display:none}
+.bigstep{font-size:24px;font-weight:800;margin:6px 0}
 </style>
 </head>
 <body>
@@ -48,6 +53,11 @@ footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
   <p id="done">✅ 설치되어 있어요. 아래 버튼을 누르세요.</p>
 
   <section id="install">
+    <!-- 카카오톡 안에서 열렸을 때 -->
+    <div class="box" id="stepKakao">
+      <div class="bigstep">👉 오른쪽 위 <b>⋮</b> (점 세 개)를 누르세요</div>
+      <div class="bigstep">👉 <b>"다른 브라우저로 열기"</b>를 누르세요</div>
+    </div>
     <!-- 안드로이드: 삼성 인터넷이 아닐 때 -->
     <div class="box" id="stepOpen">
       <div class="hand">👇</div>
@@ -57,14 +67,10 @@ footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
     </div>
     <!-- 삼성 인터넷 안에서 -->
     <div class="box" id="stepAdd">
-      <div class="hand">👇</div>
-      <b>홈 화면에 설치하기</b>
-      <ol>
-        <li>화면 <b>맨 아래 ≡ (줄 세 개)</b>를 누르세요</li>
-        <li><b>"현재 페이지 추가"</b>를 누르세요</li>
-        <li><b>"홈 화면"</b> → <b>"추가"</b>를 누르세요</li>
-      </ol>
-      <p class="small" style="margin-top:8px">홈 화면에 🚦 국민 AI 신호등 아이콘이 생겨요 🎉</p>
+      <div class="bigstep">① 맨 아래 빨간 손가락이 가리키는 <b>≡</b> 를 누르세요</div>
+      <div class="bigstep">② <b>"현재 페이지 추가"</b> 누르기</div>
+      <div class="bigstep">③ <b>"홈 화면"</b> 누르기 → <b>"추가"</b> 누르기</div>
+      <p class="small" style="margin-top:8px">끝! 바탕화면에 🚦 아이콘이 생겨요 🎉</p>
     </div>
     <!-- 아이폰 -->
     <div class="box" id="stepIos">
@@ -80,16 +86,24 @@ footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
     <div class="em">🚦</div><div><b>국민 AI 신호등 시작하기</b><span>눌러서 바로 물어보세요</span></div>
   </a>
 
+  <div class="bubble" id="bubbleBar" style="right:12px;bottom:150px">여기 ≡ 누르세요!</div>
+  <div class="finger" id="fingerBar" style="right:14px;bottom:70px">👇</div>
+  <div class="bubble" id="bubbleTop" style="right:12px;top:110px">여기 ⋮ 누르세요!</div>
+  <div class="finger" id="fingerTop" style="right:14px;top:30px">👆</div>
   <footer>문의: 카카오톡 알버트 YANG (양철배)</footer>
 </div>
 <script>
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 const ua=navigator.userAgent;const $=id=>document.getElementById(id);
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const show=id=>{$(id).style.display='block'};
 if(standalone){$('done').style.display='block';$('install').style.display='none';}
-else if(/iphone|ipad|ipod/i.test(ua)){$('stepIos').style.display='block';}
-else if(/SamsungBrowser/i.test(ua)){$('stepAdd').style.display='block';}
-else if(/android/i.test(ua)){$('stepOpen').style.display='block';}
+else if(/KAKAOTALK/i.test(ua)){
+  if(/android/i.test(ua)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+  show('stepKakao');show('fingerTop');show('bubbleTop');}
+else if(/iphone|ipad|ipod/i.test(ua)){show('stepIos');}
+else if(/SamsungBrowser/i.test(ua)){show('stepAdd');show('fingerBar');show('bubbleBar');}
+else if(/android/i.test(ua)){show('stepOpen');setTimeout(()=>{location.href='intent://a90915719-hue.github.io/sinhodeung/#Intent;scheme=https;package=com.sec.android.app.sbrowser;end'},600);}
 else{$('install').style.display='none';}
 $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('https://a90915719-hue.github.io/sinhodeung/');$('copy').textContent='✅ 복사됐어요';}catch(e){prompt('이 주소를 복사하세요','https://a90915719-hue.github.io/sinhodeung/');}});
 </script>
