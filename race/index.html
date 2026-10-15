@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>경마 신호등</title>
-<meta name="description" content="확률환수 신호등 · 경마 예상">
+<meta name="description" content="이번 주 예상과 신호를 한눈에">
 <meta name="theme-color" content="#13233F">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
@@ -19,17 +19,22 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:20px;line-height:1.6}
 .wrap{max-width:560px;margin:0 auto;padding:20px 16px 40px;display:flex;flex-direction:column;gap:18px}
 header{display:flex;align-items:center;gap:14px}
-header img{width:64px;height:64px;border-radius:16px}
-h1{margin:0;font-size:34px;letter-spacing:-.01em}
+header img{width:68px;height:68px;border-radius:16px}
+h1{margin:0;font-size:32px;letter-spacing:-.01em;line-height:1.25}
 .sub{margin:0;color:var(--muted);font-size:17px}
 .go{display:flex;align-items:center;gap:16px;padding:22px 20px;border-radius:22px;text-decoration:none;color:var(--ink);background:var(--card);border:2px solid var(--line);min-height:96px}
-.go:active{transform:translateY(2px)}
 .go .em{font-size:44px;line-height:1}
 .go b{display:block;font-size:26px}
 .go span{color:var(--muted);font-size:17px}
-#install{display:none;width:100%;border:0;border-radius:22px;padding:22px;font:inherit;font-size:26px;font-weight:800;background:var(--sign);color:#13233F;cursor:pointer;min-height:80px}
-#ios{display:none;background:var(--card);border:2px dashed var(--sign);border-radius:18px;padding:16px 18px;font-size:19px}
+.big{display:block;width:100%;border:0;border-radius:22px;padding:20px;font:inherit;font-size:24px;font-weight:800;background:var(--sign);color:#13233F;cursor:pointer;text-align:center;text-decoration:none;min-height:76px}
+.box{background:var(--card);border:2px dashed var(--sign);border-radius:18px;padding:16px 18px;font-size:19px;display:none}
+.box ol{margin:8px 0 0;padding-left:1.3em}
+.box li{margin:4px 0}
+.hand{font-size:30px;animation:b 1s infinite alternate}
+@keyframes b{to{transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){.hand{animation:none}}
 #done{display:none;text-align:center;color:var(--muted);font-size:17px}
+.small{font-size:16px;color:var(--muted);text-align:center;margin:0}
 footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
 </style>
 </head>
@@ -40,27 +45,54 @@ footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
     <div><h1>경마 신호등</h1><p class="sub">이번 주 예상과 신호를 한눈에</p></div>
   </header>
 
-  <button id="install">📲 내 핸드폰에 설치하기</button>
-  <div id="ios">📲 <b>아이폰 설치 방법</b><br>아래쪽 <b>공유 버튼(네모에 ↑)</b>을 누르고<br>→ <b>"홈 화면에 추가"</b> → <b>"추가"</b>를 누르세요.</div>
-  <p id="done">✅ 설치되어 있어요. 홈 화면의 🏇 경마 신호등을 누르세요.</p>
+  <p id="done">✅ 설치되어 있어요. 아래 버튼을 누르세요.</p>
+
+  <section id="install">
+    <!-- 안드로이드: 삼성 인터넷이 아닐 때 -->
+    <div class="box" id="stepOpen">
+      <div class="hand">👇</div>
+      <b>1단계</b> · 아래 노란 버튼을 누르세요.<br>삼성 인터넷으로 이 화면이 다시 열려요.
+      <a class="big" style="margin-top:12px" href="intent://a90915719-hue.github.io/sinhodeung/race/#Intent;scheme=https;package=com.sec.android.app.sbrowser;end">👉 여기를 누르세요</a>
+      <p class="small" style="margin-top:10px">안 열리면 → <button id="copy" style="font:inherit;font-size:16px;border:1px solid var(--line);background:none;color:inherit;border-radius:10px;padding:4px 10px">주소 복사하기</button> 를 누르고<br>삼성 인터넷 주소창에 붙여 넣으세요.</p>
+    </div>
+    <!-- 삼성 인터넷 안에서 -->
+    <div class="box" id="stepAdd">
+      <div class="hand">👇</div>
+      <b>홈 화면에 설치하기</b>
+      <ol>
+        <li>화면 <b>맨 아래 ≡ (줄 세 개)</b>를 누르세요</li>
+        <li><b>"현재 페이지 추가"</b>를 누르세요</li>
+        <li><b>"홈 화면"</b> → <b>"추가"</b>를 누르세요</li>
+      </ol>
+      <p class="small" style="margin-top:8px">홈 화면에 🏇 경마 신호등 아이콘이 생겨요 🎉</p>
+    </div>
+    <!-- 아이폰 -->
+    <div class="box" id="stepIos">
+      <b>📲 아이폰 설치 방법</b>
+      <ol>
+        <li>아래쪽 <b>공유 버튼(네모에 ↑)</b>을 누르세요</li>
+        <li><b>"홈 화면에 추가"</b> → <b>"추가"</b>를 누르세요</li>
+      </ol>
+    </div>
+  </section>
 
   <a class="go" href="https://claude.ai/artifact/8sDgiKv8xjcDQRdLRBmFR4">
     <div class="em">🏇</div><div><b>확률환수 신호등 열기</b><span>이번 주 경마 예상·신호·결과</span></div>
   </a>
+  <p class="small">⚠️ 예상은 확률일 뿐이에요. 정해 둔 금액 안에서만 즐기세요.</p>
 
-  <p class="sub" style="text-align:center">⚠️ 예상은 확률일 뿐이에요. 정해 둔 금액 안에서만 즐기세요.</p>
   <footer>문의: 카카오톡 알버트 YANG (양철배)</footer>
 </div>
 <script>
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
-const btn=document.getElementById('install'),ios=document.getElementById('ios'),done=document.getElementById('done');
+const ua=navigator.userAgent;const $=id=>document.getElementById(id);
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-let ev=null;
-if(standalone){done.style.display='block';}
-else if(/iphone|ipad|ipod/i.test(navigator.userAgent)){ios.style.display='block';}
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;btn.style.display='block';});
-btn.addEventListener('click',async()=>{if(!ev)return;ev.prompt();const r=await ev.userChoice;ev=null;btn.style.display='none';if(r.outcome==='accepted')done.style.display='block';});
-window.addEventListener('appinstalled',()=>{btn.style.display='none';done.style.display='block';});
+if(standalone){$('done').style.display='block';$('install').style.display='none';}
+else if(/iphone|ipad|ipod/i.test(ua)){$('stepIos').style.display='block';}
+else if(/SamsungBrowser/i.test(ua)){$('stepAdd').style.display='block';}
+else if(/android/i.test(ua)){$('stepOpen').style.display='block';}
+else{$('install').style.display='none';}
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('https://a90915719-hue.github.io/sinhodeung/race/');$('copy').textContent='✅ 복사됐어요';}catch(e){prompt('이 주소를 복사하세요','https://a90915719-hue.github.io/sinhodeung/race/');}});
 </script>
 </body>
 </html>
