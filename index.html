@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>신호등</title>
+<meta name="description" content="AI 신호등 · 확률환수 신호등">
+<meta name="theme-color" content="#13233F">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="신호등">
+<style>
+:root{--bg:#FFF8E6;--ink:#13233F;--muted:#4A5568;--sign:#FFC83D;--card:#fff;--line:#EADFC2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1626;--ink:#EEF2F9;--muted:#A9B4C8;--card:#162238;--line:#2A3853}}
+:root[data-theme="dark"]{--bg:#0E1626;--ink:#EEF2F9;--muted:#A9B4C8;--card:#162238;--line:#2A3853}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:20px;line-height:1.6}
+.wrap{max-width:560px;margin:0 auto;padding:20px 16px 40px;display:flex;flex-direction:column;gap:18px}
+header{display:flex;align-items:center;gap:14px}
+header img{width:64px;height:64px;border-radius:16px}
+h1{margin:0;font-size:34px;letter-spacing:-.01em}
+.sub{margin:0;color:var(--muted);font-size:17px}
+.go{display:flex;align-items:center;gap:16px;padding:22px 20px;border-radius:22px;text-decoration:none;color:var(--ink);background:var(--card);border:2px solid var(--line);min-height:96px}
+.go:active{transform:translateY(2px)}
+.go .em{font-size:44px;line-height:1}
+.go b{display:block;font-size:26px}
+.go span{color:var(--muted);font-size:17px}
+#install{display:none;width:100%;border:0;border-radius:22px;padding:22px;font:inherit;font-size:26px;font-weight:800;background:var(--sign);color:#13233F;cursor:pointer;min-height:80px}
+#ios{display:none;background:var(--card);border:2px dashed var(--sign);border-radius:18px;padding:16px 18px;font-size:19px}
+#done{display:none;text-align:center;color:var(--muted);font-size:17px}
+footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon-192.png" alt="">
+    <div><h1>신호등</h1><p class="sub">누르기만 하면 바로 열려요</p></div>
+  </header>
+
+  <button id="install">📲 내 핸드폰에 설치하기</button>
+  <div id="ios">📲 <b>아이폰 설치 방법</b><br>아래쪽 <b>공유 버튼(네모에 ↑)</b>을 누르고<br>→ <b>"홈 화면에 추가"</b> → <b>"추가"</b>를 누르세요.</div>
+  <p id="done">✅ 설치되어 있어요. 홈 화면의 🚦 신호등을 누르세요.</p>
+
+  <a class="go" href="https://claude.ai/artifact/7hvLtwv4iDvMfq1Y1iUcfs">
+    <div class="em">🚦</div><div><b>AI 신호등</b><span>버튼 하나로 AI 도움 받기</span></div>
+  </a>
+  <a class="go" href="https://claude.ai/artifact/8sDgiKv8xjcDQRdLRBmFR4">
+    <div class="em">🏇</div><div><b>확률환수 신호등</b><span>이번 주 경마 예상·신호</span></div>
+  </a>
+
+  <footer>문의: 카카오톡 알버트 YANG (양철배)</footer>
+</div>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+const btn=document.getElementById('install'),ios=document.getElementById('ios'),done=document.getElementById('done');
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+let ev=null;
+if(standalone){done.style.display='block';}
+else if(/iphone|ipad|ipod/i.test(navigator.userAgent)){ios.style.display='block';}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;btn.style.display='block';});
+btn.addEventListener('click',async()=>{if(!ev)return;ev.prompt();const r=await ev.userChoice;ev=null;btn.style.display='none';if(r.outcome==='accepted')done.style.display='block';});
+window.addEventListener('appinstalled',()=>{btn.style.display='none';done.style.display='block';});
+</script>
+</body>
+</html>
