@@ -1,0 +1,16 @@
+{
+  "name": "경마 신호등",
+  "short_name": "경마신호등",
+  "description": "확률환수 신호등 · 경마 예상",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#13233F",
+  "theme_color": "#13233F",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
